@@ -8,6 +8,7 @@ def main():
         print("MENU")
         print("1 - Encurtar url")
         print("2 - Buscar encurtador")
+        print("3 - Buscar código encurtador")
         print("0 - Sair")
         print("="*30)
         acao = input("Selecione uma opção: ")
@@ -18,10 +19,16 @@ def main():
                 url=url_encutar
             )
             print(response["mensagem"])
+            input("Pressione \"Enter\" para prosseguir...")
         
         elif acao == "2":
             url_procurada = input("Digite a url que deseja buscar: ")
             response = encutador.buscar_url(url=url_procurada)
+            print(response["mensagem"])
+        
+        elif acao == "3":
+            codigo = input("Digite o código do link encurtado: ")
+            response = encutador.buscar_codigo(codigo=codigo)
             print(response["mensagem"])
 
         elif acao == "0":
