@@ -72,11 +72,26 @@ class Encutador():
 
         return {
             "sucesso": True,
-            "mensagem": f"Encurtador gerado com sucesso: https://encutador.com.br/{hash_simples}"
+            "mensagem": f"Encurtador gerado: https://encutador.com.br/{hash_simples}\nCódigo de acesso: {hash_simples}"
         }
         
     def buscar_url(self, url):
         response = self.verifica_url(url=url, encurtador=True)
+        if response["sucesso"]:
+            destino = self.links[1][response["mensagem"]]
+            webbrowser.open(destino)  # 🔁 redireciona
+            return {
+                "sucesso": True,
+                "mensagem": f"Redirecionando para {destino}..."
+            }
+        
+        return {
+            "sucesso": False,
+            "mensagem": "Link inexistente! Gere um encurtador!"
+        }
+    
+    def buscar_codigo(self, codigo):
+        response = self.verifica_url(url=f"https://encutador.com.br/{codigo}", encurtador=True)
         if response["sucesso"]:
             destino = self.links[1][response["mensagem"]]
             webbrowser.open(destino)  # 🔁 redireciona
