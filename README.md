@@ -78,7 +78,13 @@ python -m unittest discover tests
 
 ---
 
-## ⚙️ Requisitos
+## ⚙️ Requisitos e Instalação
 
-- Python 3.x
-- Flask (`pip install Flask`)
+- Python 3.10+
+
+Instale as dependências com:
+
+```bash
+pip install -r requirements.txt
+```
+

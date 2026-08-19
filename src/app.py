@@ -2,6 +2,13 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for
 import os
 import sys
 
+try:
+    from dotenv import load_dotenv
+    # Carrega o .env localizado na raiz do projeto
+    load_dotenv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env"))
+except ImportError:
+    pass
+
 # Garante que o diretório src esteja no sys.path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -71,6 +78,10 @@ def redirecionar(codigo):
     return render_template("404.html", codigo=codigo), 404
 
 if __name__ == "__main__":
+    host = os.environ.get("HOST", "0.0.0.0")
     porta = int(os.environ.get("PORT", 5000))
+    debug = os.environ.get("FLASK_DEBUG", "True").lower() in ("true", "1", "yes")
+
     print(f"\n* Servidor do Encurtador rodando em: http://127.0.0.1:{porta}\n")
-    app.run(host="0.0.0.0", port=porta, debug=True)
+    app.run(host=host, port=porta, debug=debug)
+
