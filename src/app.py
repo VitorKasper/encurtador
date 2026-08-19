@@ -23,14 +23,19 @@ def index():
 
 @app.route("/api/encurtar", methods=["POST"])
 def api_encurtar():
-    print("\n" + "!" * 60)
-    print(" [FATAL ERROR SIMULADO] Encurtador acionado!")
-    print(" Forçando finalização imediata do processo (os._exit(1)) para teste de redeploy...")
-    print("!" * 60 + "\n")
-    
-    # Mata o processo imediatamente no nível do sistema operacional
-    os._exit(1)
+    data = request.get_json(silent=True) or {}
+    url = data.get("url", "").strip()
 
+    if not url:
+        return jsonify({
+            "sucesso": False,
+            "mensagem": "Por favor, informe uma URL válida."
+        }), 400
+
+    base_url = request.host_url.rstrip("/")
+    resultado = encurtador_service.encutar_url(url=url, base_url=base_url)
+
+    return jsonify(resultado), 200
 
 @app.route("/api/buscar", methods=["POST"])
 def api_buscar():
