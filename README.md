@@ -1,38 +1,84 @@
 # Encurtador de URL
 
-Encurtador de URL feito em Python, criado como um desafio pessoal: **construir do zero, sem uso de IA, no menor tempo possível.**
+Encurtador de URLs rápido, moderno e leve em Python. Possui tanto **Interface Web interativa (Site)** quanto modo **Terminal (CLI)**, mantendo os links em memória durante a sessão.
 
-> Tempo total: **30 minutos**
+---
 
-## Como funciona
+## 🌐 Interface Web (Site)
 
-O programa roda via terminal com um menu interativo. Ele mantém os links em memória durante a sessão (sem banco de dados).
+O projeto conta com uma interface web com tema Dark/Glassmorphism, suporte a cópia rápida, busca por código e redirecionamento direto no navegador.
 
-- **Encurtar URL:** recebe uma URL longa e gera um código curto no formato `https://encutador.com.br/XXXXX`. Se a URL já foi encurtada antes, retorna o código existente.
-- **Buscar encurtador:** recebe um link curto completo e abre a URL original no navegador.
-- **Buscar por código:** recebe apenas o código curto (ex: `a3b9c`) sem precisar digitar a URL completa, e redireciona da mesma forma.
+### Como rodar o site
 
-O código curto é gerado com 5 caracteres alfanuméricos, onde dois dígitos de um número aleatório são substituídos por letras do alfabeto.
-
-## Estrutura
-
-```
-src/
-├── main.py                  # Menu e loop principal
-└── service/
-    └── encurtador.py        # Lógica de encurtamento e busca
+```bash
+python src/app.py
 ```
 
-## Como rodar
+Após iniciar, abra no seu navegador:
+👉 **[http://localhost:5000](http://localhost:5000)**
+
+### Funcionalidades do Site
+
+- **Encurtar URL**: Cole qualquer link longo e receba uma URL encurtada com código único de 5 dígitos alfanuméricos.
+- **Redirecionamento Web Real**: Acesse `http://localhost:5000/<codigo>` para ser redirecionado instantaneamente (HTTP 302) ao link original.
+- **Buscar / Redirecionar**: Digite apenas o código ou a URL encurtada para localizar e acessar o destino.
+- **Histórico da Sessão**: Acompanhe todos os links encurtados durante a sessão com botão de cópia rápida em 1 clique.
+- **Detecção de Duplicados**: URLs já encurtadas na sessão retornam o mesmo código gerado anteriormente.
+
+---
+
+## 💻 Modo Terminal (CLI)
+
+Se preferir usar diretamente pelo console interativo:
 
 ```bash
 cd src
 python main.py
 ```
 
-Requer Python 3.x. Sem dependências externas.
+Opções do menu:
+1. **Encurtar URL**
+2. **Buscar encurtador**
+3. **Buscar código encurtador**
+0. **Sair**
 
-## Limitações
+---
 
-- Os links são armazenados apenas em memória — ao encerrar o programa, tudo é perdido.
-- Os links curtos gerados (`encutador.com.br/...`) são fictícios e não funcionam como URLs reais na web.
+## 📂 Estrutura do Projeto
+
+```
+encurtador/
+├── src/
+│   ├── app.py                  # Servidor Flask e rotas da API/Redirecionamento
+│   ├── main.py                 # Menu interativo via terminal (CLI)
+│   ├── service/
+│   │   └── encurtador.py       # Lógica central de encurtamento e busca
+│   ├── templates/
+│   │   ├── index.html          # Página principal do site
+│   │   └── 404.html            # Página de link não encontrado
+│   └── static/
+│       ├── css/
+│       │   └── style.css       # Estilos modernos Dark/Glassmorphism
+│       └── js/
+│           └── main.js         # Integração assíncrona do frontend
+└── tests/
+    ├── test_encurtador.py      # Testes unitários do serviço
+    └── test_app.py             # Testes de integração da aplicação Flask
+```
+
+---
+
+## 🧪 Testes Automatizados
+
+Para rodar a suíte de testes:
+
+```bash
+python -m unittest discover tests
+```
+
+---
+
+## ⚙️ Requisitos
+
+- Python 3.x
+- Flask (`pip install Flask`)
